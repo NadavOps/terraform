@@ -1,2 +1,2 @@
 # terraform
-Reuseable Terraform Modules
+Reusable Terraform Modules
