@@ -17,7 +17,7 @@ variable "simple_rules" {
   # description = "", sg_name = "name_from => security_groups_list" }
   description = "A list of rule maps"
   type        = list(any)
-  default = []
+  default     = []
 }
 
 variable "source_sg_rules" {
@@ -26,13 +26,13 @@ variable "source_sg_rules" {
   # source_sg_name = "name_from => security_groups_list", sg_name = "name_from => security_groups_list" }
   description = "A list of rule maps, assigning security group as the source"
   type        = list(map(string))
-  default = []
+  default     = []
 }
 
 variable "sg_create_enabled" {
   description = "true by default to enable security groups creation"
   type        = bool
-  default = true
+  default     = true
 }
 
 variable "tags" {
