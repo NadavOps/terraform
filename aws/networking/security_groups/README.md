@@ -1,4 +1,7 @@
-Example of usage.
+Defining aws security groups and their rules with the expected opinionated way, \
+will allow creation of security groups and rules in one module block.
+
+Example:
 
 Define security groups and rules:
 
@@ -22,11 +25,11 @@ locals {
 Call the module:
 ```
 module "security_groups" {
-    source = "git@github.com:NadavOps/terraform.git//aws/networking/security_groups"
-    for_each = local.security_groups
-    sg_name = each.value.sg_name
-    sg_description = each.value.sg_name
-    vpc_id = "vpc-id"
+    source           = "git@github.com:NadavOps/terraform.git//aws/networking/security_groups"
+    for_each         = local.security_groups
+    sg_name          = each.value.sg_name
+    sg_description   = each.value.sg_description
+    vpc_id           = "vpc-id"
     cidr_block_rules = contains(keys(each.value), "sg_rules") ? each.value.sg_rules : {}
 }
 ```
