@@ -1,42 +1,53 @@
-### Required vars
-variable "security_groups_list" {
-  # example [ ["sg1", "description1"], ["sg2", "description2"]]
-  description = "A list of security groups names and descriptions, controls the amount of groups to be created"
-  type        = list(list(string))
-}
-
-variable "vpc_id" {
-  description = "The VPC ID in which the security group will be created"
-  type        = string
-}
-
-### Optional vars
-variable "simple_rules" {
-  # example: 
-  # { type = "ingress/egress", from_port = 1, to_port = 1, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"],
-  # description = "", sg_name = "name_from => security_groups_list" }
-  description = "A list of rule maps"
-  type        = list(any)
-  default     = []
-}
-
-variable "source_sg_rules" {
-  # example: 
-  # { type = "ingress/egress", from_port = 1, to_port = 1, protocol = "tcp", description = "",
-  # source_sg_name = "name_from => security_groups_list", sg_name = "name_from => security_groups_list" }
-  description = "A list of rule maps, assigning security group as the source"
-  type        = list(map(string))
-  default     = []
-}
-
 variable "sg_create_enabled" {
   description = "true by default to enable security groups creation"
   type        = bool
   default     = true
 }
 
+variable "sg_name" {
+  description = "The security group name, required if sg_create_enabled is true"
+  type        = string
+  default     = null
+}
+
+variable "sg_description" {
+  description = "The security group description, required if sg_create_enabled is true"
+  type        = string
+  default     = null
+}
+
+variable "vpc_id" {
+  description = "The VPC ID in which the security group will be created, required if sg_create_enabled is true"
+  type        = string
+  default     = null
+}
+
 variable "tags" {
-  description = "A mapping of tags to assign to the ec2 instance"
+  description = "Map of tags to assign to the security group"
   type        = map(string)
   default     = {}
+}
+
+variable "cidr_block_rules" {
+  description = "Map of cidrblock rules"
+  type = map(
+    object(
+      { type        = string, from_port = number, to_port = number, protocol = string,
+        cidr_blocks = list(string), description = string, self = bool
+      }
+    )
+  )
+  default = {}
+}
+
+variable "source_sg_rules" {
+  description = "Map of source security groups rules"
+  type = map(
+    object(
+      { type                     = string, from_port = number, to_port = number, protocol = string,
+        source_security_group_id = list(string), description = string
+      }
+    )
+  )
+  default = {}
 }
