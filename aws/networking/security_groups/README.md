@@ -11,10 +11,22 @@ locals {
     sg_key_1 = {
       sg_name        = "Security group name",
       sg_description = "Security group description",
-      sg_rules = {
+      cidr_block_rule = {
         rule_key_1 = {
           type        = "ingress", from_port = 22, to_port = 22, protocol = "TCP",
-          cidr_blocks = ["0.0.0.0/0"], description = "SSH from everywhere", self = false
+          cidr_blocks = ["0.0.0.0/0"], description = "SSH from everywhere"
+        }
+      }
+      source_sg_rules = {
+        rule_key_1 = {
+          type                     = "ingress", from_port = 80, to_port = 80, protocol = "TCP",
+          source_security_group_id = "source-sg-id", description = "HTTP from specific source sg"
+        }
+      }
+      self_sg_rules = {
+        rule_key_1 = {
+          type     = "ingress", from_port = 22, to_port = 22,
+          protocol = "TCP", description = "Self"
         }
       }
     }
@@ -30,6 +42,8 @@ module "security_groups" {
     sg_name          = each.value.sg_name
     sg_description   = each.value.sg_description
     vpc_id           = "vpc-id"
-    cidr_block_rules = contains(keys(each.value), "sg_rules") ? each.value.sg_rules : {}
+    cidr_block_rules = contains(keys(each.value), "cidr_block_rule") ? each.value.cidr_block_rule : {}
+    source_sg_rules  = contains(keys(each.value), "source_sg_rules") ? each.value.source_sg_rules : {}
+    self_sg_rules    = contains(keys(each.value), "self_sg_rules") ? each.value.self_sg_rules : {}
 }
 ```

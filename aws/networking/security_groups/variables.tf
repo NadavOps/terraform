@@ -32,8 +32,9 @@ variable "cidr_block_rules" {
   description = "Map of cidrblock rules"
   type = map(
     object(
-      { type        = string, from_port = number, to_port = number, protocol = string,
-        cidr_blocks = list(string), description = string, self = bool
+      {
+        type        = string, from_port = number, to_port = number, protocol = string,
+        cidr_blocks = list(string), description = string
       }
     )
   )
@@ -44,8 +45,22 @@ variable "source_sg_rules" {
   description = "Map of source security groups rules"
   type = map(
     object(
-      { type                     = string, from_port = number, to_port = number, protocol = string,
+      {
+        type                     = string, from_port = number, to_port = number, protocol = string,
         source_security_group_id = list(string), description = string
+      }
+    )
+  )
+  default = {}
+}
+
+variable "self_sg_rules" {
+  description = "Map of source security groups rules"
+  type = map(
+    object(
+      {
+        type     = string, from_port = number, to_port = number,
+        protocol = string, description = string
       }
     )
   )
