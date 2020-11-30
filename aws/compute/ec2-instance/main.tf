@@ -1,9 +1,9 @@
-resource "aws_instance" "ec2_instances" {
-	count                  = var.create_resource ? var.instances_amount : 0
+resource "aws_instance" "ec2_instance" {
+	count                  = var.ec2_create_enabled ? 1 : 0
 	ami                    = var.ami
 	instance_type          = var.instance_type
 	key_name               = var.key_name
-	subnet_id              = var.subnet_id   ## element(list(var.subnet_id_1a, var.subnet_id_1b), count.index)
+	subnet_id              = element(var.subnet_ids, count.index)
 	vpc_security_group_ids = var.vpc_security_group_ids
 	iam_instance_profile   = var.iam_instance_profile
 

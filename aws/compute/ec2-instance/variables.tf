@@ -9,9 +9,9 @@ variable "instance_type" {
   type        = string
 }
 
-variable "subnet_id" {
+variable "subnet_ids" {
   description = "The subnet in which the ec2 will be populated in"
-  type        = string
+  type        = list(string)
 }
 
 variable "vpc_security_group_ids" {
@@ -28,7 +28,7 @@ variable "key_name" {
 
 
 ### Optional vars
-variable "create_resource" {
+variable "ec2_create_enabled" {
   ## It might be beneficial to have a flag for some cases such as blue/ green deployments
   description = "If true will create the ec2 resorce"
   type        = bool
