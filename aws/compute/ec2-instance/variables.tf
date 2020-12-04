@@ -9,9 +9,9 @@ variable "instance_type" {
   type        = string
 }
 
-variable "subnet_ids" {
+variable "subnet_id" {
   description = "The subnet in which the ec2 will be populated in"
-  type        = list(string)
+  type        = string
 }
 
 variable "vpc_security_group_ids" {
