@@ -35,12 +35,6 @@ variable "ec2_create_enabled" {
   default     = true
 }
 
-variable "instances_amount" {
-  description = "Amount of instances that will be launched"
-  type        = number
-  default     = 1
-}
-
 variable "iam_instance_profile" {
   description = "The IAM instance profile assigned with the ec2 instance"
   type        = string
