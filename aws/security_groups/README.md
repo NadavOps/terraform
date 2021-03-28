@@ -37,7 +37,7 @@ locals {
 Call the module:
 ```
 module "security_groups" {
-    source           = "git@github.com:NadavOps/terraform.git//aws/networking/security_groups"
+    source           = "git@github.com:NadavOps/terraform.git//aws/security_groups"
     for_each         = local.security_groups
     sg_name          = each.value.sg_name
     sg_description   = each.value.sg_description
