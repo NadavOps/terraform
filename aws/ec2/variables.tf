@@ -64,3 +64,9 @@ variable "root_block_device" {
   type        = list(map(string))
   default     = []
 }
+
+variable "associate_public_ip_address_enabled" {
+  description = "True to associate a public ip"
+  type        = bool
+  default     = null
+}
